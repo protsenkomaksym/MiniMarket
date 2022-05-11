@@ -28,12 +28,8 @@ namespace MiniMarket.Controllers
 
         public IActionResult Index()
         {
-            CategoriesBusiness categoriesBusiness = new CategoriesBusiness(_db, _mapper);
-            List<CategoryDto> lstCat = categoriesBusiness.GetAllCategories();
-
             return View();
         }
-
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
