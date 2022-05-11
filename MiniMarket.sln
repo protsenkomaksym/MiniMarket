@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.32407.337
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MiniMarket.Web", "MiniMarket\MiniMarket.Web.csproj", "{9206AA3E-57A8-4BFE-9AF1-4963AAFD4D8C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MiniMarket.Web", "MiniMarket.Web\MiniMarket.Web.csproj", "{9206AA3E-57A8-4BFE-9AF1-4963AAFD4D8C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniMarket.DAL", "MiniMarket.DAL\MiniMarket.DAL.csproj", "{6BD2B6A1-5D6E-49B7-8AF4-B127D0212A4F}"
 EndProject
