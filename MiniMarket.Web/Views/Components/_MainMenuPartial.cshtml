@@ -19,7 +19,7 @@
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         @foreach (MiniMarket.Entities.Dto.CategoryDto c in Model)
                         {
-                            <li><a class="dropdown-item" href="#">@c.name</a></li>
+                            <li><a class="dropdown-item" asp-action="Search" asp-controller="Home" asp-route-idCategory="@c.id">@c.name</a></li>
                         }
                     </ul>
                 </li>

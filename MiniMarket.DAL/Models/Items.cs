@@ -7,17 +7,14 @@ using System.Collections.Generic;
 
 namespace MiniMarket.DAL.Models
 {
-    public partial class Categories
+    public partial class Items
     {
-        public Categories()
-        {
-            Items = new HashSet<Items>();
-        }
-
         public int Id { get; set; }
         public string Name { get; set; }
+        public decimal Price { get; set; }
+        public int IdCategory { get; set; }
         public DateTime Created { get; set; }
 
-        public virtual ICollection<Items> Items { get; set; }
+        public virtual Categories IdCategoryNavigation { get; set; }
     }
 }

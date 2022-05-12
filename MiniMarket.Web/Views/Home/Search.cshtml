@@ -1,0 +1,25 @@
+﻿@model MiniMarket.Web.Models.SearchViewModel
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<div class="row">
+    <div class="col-md-3">
+        Filters
+        <br />
+
+        <!-- Categories -->
+        <div class="list-group">
+            @foreach (MiniMarket.Entities.Dto.CategoryDto c in Model.lstCategories)
+            {
+                <a class="list-group-item @{ if(Model.idCategory == c.id){<text>active</text>}} " href="#@c.id">@c.name</a>
+            }
+        </div>
+
+    </div>
+    <div class="col-md-9">
+        Items found
+    </div>
+</div>

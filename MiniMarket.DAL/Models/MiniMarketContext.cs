@@ -20,6 +20,7 @@ namespace MiniMarket.DAL.Models
         }
 
         public virtual DbSet<Categories> Categories { get; set; }
+        public virtual DbSet<Items> Items { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -46,6 +47,34 @@ namespace MiniMarket.DAL.Models
                     .HasColumnName("name")
                     .HasMaxLength(50)
                     .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<Items>(entity =>
+            {
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Created)
+                    .HasColumnName("created")
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.IdCategory).HasColumnName("idCategory");
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasColumnName("name")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Price)
+                    .HasColumnName("price")
+                    .HasColumnType("decimal(18, 0)");
+
+                entity.HasOne(d => d.IdCategoryNavigation)
+                    .WithMany(p => p.Items)
+                    .HasForeignKey(d => d.IdCategory)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Items_Categories");
             });
 
             OnModelCreatingPartial(modelBuilder);
