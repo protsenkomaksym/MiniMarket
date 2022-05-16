@@ -68,6 +68,53 @@ namespace MiniMarket.Controllers
             return View(model);
         }
 
+        public IActionResult Admin()
+        {
+            return View();
+        }
+
+        public IActionResult AddNewItem()
+        {
+            AddNewItemViewModel model = new AddNewItemViewModel();
+
+            CategoriesBusiness categoriesBusiness = new CategoriesBusiness(_db, _mapper);
+            ItemsBusiness itemsBusiness = new ItemsBusiness(_db, _mapper);
+            model.lstCategories = new List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem>();
+
+            foreach (CategoryDto c in categoriesBusiness.GetAllCategories())
+            {
+                model.lstCategories.Add(new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem()
+                {
+                    Value = c.id.ToString(),
+                    Text = c.name
+                });
+            }
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult AddNewItem(AddNewItemViewModel model)
+        {
+            CategoriesBusiness categoriesBusiness = new CategoriesBusiness(_db, _mapper);
+            ItemsBusiness itemsBusiness = new ItemsBusiness(_db, _mapper);
+            model.lstCategories = new List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem>();
+
+            // TODO: Create
+
+            // Populate model again
+            foreach (CategoryDto c in categoriesBusiness.GetAllCategories())
+            {
+                model.lstCategories.Add(new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem()
+                {
+                    Value = c.id.ToString(),
+                    Text = c.name
+                });
+            }
+
+            return View(model);
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
