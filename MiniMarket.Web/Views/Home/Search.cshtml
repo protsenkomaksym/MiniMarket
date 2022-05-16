@@ -14,12 +14,34 @@
         <div class="list-group">
             @foreach (MiniMarket.Entities.Dto.CategoryDto c in Model.lstCategories)
             {
-                <a class="list-group-item @{ if(Model.idCategory == c.id){<text>active</text>}} " href="#@c.id">@c.name</a>
+                <a class="list-group-item @{ if(Model.idCategory == c.id){<text>active</text>}}" asp-action="Search" asp-controller="Home" asp-route-idCategory="@c.id">@c.name</a>
             }
         </div>
 
     </div>
     <div class="col-md-9">
         Items found
+        <br />
+
+        <ol class="list-group list-group-numbered">
+            @if (Model.lstItems.Count == 0)
+            {
+                <div class="alert alert-warning" role="alert">
+                    No items found
+                </div>
+            }
+
+            @foreach (MiniMarket.Entities.Dto.ItemDto i in Model.lstItems)
+            {
+                <li class="list-group-item d-flex justify-content-between align-items-start">
+                    <div class="ms-2 me-auto">
+                        <div class="fw-bold"><a asp-action="Item" asp-controller="Home" asp-route-id="@i.Id">@i.Name</a></div>
+                        @i.Description
+                    </div>
+                    <span class="badge bg-primary rounded-pill">$@i.Price</span>
+                </li>
+            }
+        </ol>
+
     </div>
 </div>

@@ -10,5 +10,6 @@ namespace MiniMarket.Web.Models
     {
         public List<CategoryDto> lstCategories { get; set; }
         public int? idCategory { get; set; }
+        public List<ItemDto> lstItems { get; set; }
     }
 }

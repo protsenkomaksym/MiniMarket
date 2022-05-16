@@ -37,8 +37,33 @@ namespace MiniMarket.Controllers
             SearchViewModel model = new SearchViewModel();
 
             CategoriesBusiness categoriesBusiness = new CategoriesBusiness(_db, _mapper);
+            ItemsBusiness itemsBusiness = new ItemsBusiness(_db, _mapper);
             model.lstCategories = categoriesBusiness.GetAllCategories();
             model.idCategory = idCategory;
+            model.lstItems = itemsBusiness.GetItemsByCategory(idCategory);
+
+            return View(model);
+        }
+
+        public IActionResult Item(int id)
+        {
+            ItemViewModel model = new ItemViewModel();
+
+            ItemsBusiness itemsBusiness = new ItemsBusiness(_db, _mapper);
+            ItemDto i = itemsBusiness.GetItemsById(id);
+
+            if (i == null)
+            {
+                return Redirect("~/");
+            }
+            else
+            {
+                model.Id = i.Id;
+                model.Name = i.Name;
+                model.Description = i.Description;
+                model.Price = i.Price;
+                model.Created = i.Created;
+            }
 
             return View(model);
         }

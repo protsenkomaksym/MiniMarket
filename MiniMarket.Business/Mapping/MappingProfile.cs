@@ -13,6 +13,7 @@ namespace MiniMarket.Business.Mapping
         public MappingProfile()
         {
             CreateMap<Categories, CategoryDto>();
+            CreateMap<Items, ItemDto>();
         }
     }
 }
