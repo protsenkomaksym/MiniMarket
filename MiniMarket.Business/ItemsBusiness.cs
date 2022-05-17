@@ -35,5 +35,11 @@ namespace MiniMarket.Business
 
             return _mapper.Map<Items, ItemDto>(i);
         }
+
+        public void Create(ItemDto i)
+        {
+            ItemsDAL dal = new ItemsDAL(_MiniMarketContext);
+            dal.Create(_mapper.Map<ItemDto, Items>(i));
+        }
     }
 }

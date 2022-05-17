@@ -14,6 +14,7 @@ namespace MiniMarket.Business.Mapping
         {
             CreateMap<Categories, CategoryDto>();
             CreateMap<Items, ItemDto>();
+            CreateMap<ItemDto, Items>();
         }
     }
 }

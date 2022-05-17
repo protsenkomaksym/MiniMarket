@@ -10,33 +10,36 @@
 
 @using (Html.BeginForm("AddNewItem", "Home", FormMethod.Post))
 {
+    <div asp-validation-summary="All"></div>
     <div class="row">
 
         <div class="row">
             <div class="col-5">
                 <label for="address" class="form-label">Name</label>
-                <input type="text" class="form-control" asp-for="@Model.Name" id="Name" placeholder="Name">
+                <input type="text" class="form-control" asp-for="Name" placeholder="Name">
+                <span class="text-danger" asp-validation-for="Name"></span>
             </div>
         </div>
 
         <div class="row">
             <div class="col-5">
                 <label for="address" class="form-label">Description</label>
-                <input type="text" class="form-control" asp-for="@Model.Description" id="Description" placeholder="Description">
+                <input type="text" class="form-control" asp-for="Description" placeholder="Description">
             </div>
         </div>
 
         <div class="row">
             <div class="col-5">
                 <label for="address" class="form-label">Price</label>
-                <input type="text" class="form-control" asp-for="@Model.Price" id="Price" placeholder="Price">
+                <input type="text" class="form-control" asp-for="Price" placeholder="Price">
+                <span class="text-danger" asp-validation-for="Price"></span>
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-5">
                 <label for="country" class="form-label">Country</label>
-                <select class="form-select" asp-items="@Model.lstCategories" asp-for="@Model.idCategory"></select>
+                <select class="form-select" asp-items="@Model.lstCategories" asp-for="idCategory"></select>
                 <div class="invalid-feedback">
                     Please select a valid country.
                 </div>

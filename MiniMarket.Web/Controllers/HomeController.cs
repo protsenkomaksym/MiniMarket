@@ -100,7 +100,19 @@ namespace MiniMarket.Controllers
             ItemsBusiness itemsBusiness = new ItemsBusiness(_db, _mapper);
             model.lstCategories = new List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem>();
 
-            // TODO: Create
+            if (ModelState.IsValid)
+            {
+                // Create
+                ItemDto i = new ItemDto();
+                i.Name = model.Name;
+                i.Description = model.Description;
+                i.Price = model.Price.GetValueOrDefault();
+                i.IdCategory = model.idCategory.GetValueOrDefault();
+
+                itemsBusiness.Create(i);
+
+                return RedirectToAction("AddNewItem");
+            }
 
             // Populate model again
             foreach (CategoryDto c in categoriesBusiness.GetAllCategories())

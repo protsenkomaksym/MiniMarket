@@ -27,5 +27,11 @@ namespace MiniMarket.DAL
         {
             return _MiniMarketContext.Items.Where(x => x.Id == id).FirstOrDefault();
         }
+
+        public void Create(Items i)
+        {
+            _MiniMarketContext.Items.Add(i);
+            _MiniMarketContext.SaveChanges();
+        }
     }
 }
