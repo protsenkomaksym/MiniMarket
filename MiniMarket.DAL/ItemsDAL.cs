@@ -33,5 +33,17 @@ namespace MiniMarket.DAL
             _MiniMarketContext.Items.Add(i);
             _MiniMarketContext.SaveChanges();
         }
+
+        public void Update(Items i)
+        {
+            _MiniMarketContext.Entry(i).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            _MiniMarketContext.SaveChanges();
+        }
+
+        public void Delete(Items i)
+        {
+            _MiniMarketContext.Remove(i);
+            _MiniMarketContext.SaveChanges();
+        }
     }
 }

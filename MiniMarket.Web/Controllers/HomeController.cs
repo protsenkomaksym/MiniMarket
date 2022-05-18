@@ -70,16 +70,32 @@ namespace MiniMarket.Controllers
 
         public IActionResult Admin()
         {
-            return View();
+            AdminViewModel model = new AdminViewModel();
+
+            CategoriesBusiness categoriesBusiness = new CategoriesBusiness(_db, _mapper);
+            ItemsBusiness itemsBusiness = new ItemsBusiness(_db, _mapper);
+            model.lstItems = itemsBusiness.GetItemsByCategory(null);
+
+            return View(model);
         }
 
-        public IActionResult AddNewItem()
+        public IActionResult NewItem(int? id)
         {
             AddNewItemViewModel model = new AddNewItemViewModel();
 
             CategoriesBusiness categoriesBusiness = new CategoriesBusiness(_db, _mapper);
             ItemsBusiness itemsBusiness = new ItemsBusiness(_db, _mapper);
             model.lstCategories = new List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem>();
+
+            if (id != null)
+            {
+                ItemDto i = itemsBusiness.GetItemsById(id.GetValueOrDefault());
+                model.id = i.Id;
+                model.Name = i.Name;
+                model.Description = i.Description;
+                model.Price = i.Price;
+                model.idCategory = i.IdCategory;
+            }
 
             foreach (CategoryDto c in categoriesBusiness.GetAllCategories())
             {
@@ -94,7 +110,7 @@ namespace MiniMarket.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddNewItem(AddNewItemViewModel model)
+        public IActionResult NewItem(AddNewItemViewModel model)
         {
             CategoriesBusiness categoriesBusiness = new CategoriesBusiness(_db, _mapper);
             ItemsBusiness itemsBusiness = new ItemsBusiness(_db, _mapper);
@@ -104,14 +120,24 @@ namespace MiniMarket.Controllers
             {
                 // Create
                 ItemDto i = new ItemDto();
+                i.Id = model.id.GetValueOrDefault();
                 i.Name = model.Name;
                 i.Description = model.Description;
                 i.Price = model.Price.GetValueOrDefault();
                 i.IdCategory = model.idCategory.GetValueOrDefault();
 
-                itemsBusiness.Create(i);
+                if(model.id != null)
+                {
+                    // Update
+                    itemsBusiness.Update(i);
+                }
+                else
+                {
+                    // Create
+                    itemsBusiness.Create(i);
+                }
 
-                return RedirectToAction("AddNewItem");
+                return RedirectToAction("Admin");
             }
 
             // Populate model again
@@ -125,6 +151,16 @@ namespace MiniMarket.Controllers
             }
 
             return View(model);
+        }
+
+        public IActionResult Delete(int id)
+        {
+            ItemViewModel model = new ItemViewModel();
+
+            ItemsBusiness itemsBusiness = new ItemsBusiness(_db, _mapper);
+            itemsBusiness.Delete(id);
+
+            return RedirectToAction("Admin");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

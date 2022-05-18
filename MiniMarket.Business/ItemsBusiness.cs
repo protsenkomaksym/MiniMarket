@@ -41,5 +41,27 @@ namespace MiniMarket.Business
             ItemsDAL dal = new ItemsDAL(_MiniMarketContext);
             dal.Create(_mapper.Map<ItemDto, Items>(i));
         }
+
+        public void Update(ItemDto i)
+        {
+            ItemsDAL dal = new ItemsDAL(_MiniMarketContext);
+
+            Items idb = dal.GetItemById(i.Id);
+            idb.Name = i.Name;
+            idb.Description = i.Description;
+            idb.Price = i.Price;
+            idb.IdCategory = i.IdCategory;
+
+            dal.Update(idb);
+        }
+
+        public void Delete(int id)
+        {
+            ItemsDAL dal = new ItemsDAL(_MiniMarketContext);
+
+            Items idb = dal.GetItemById(id);
+
+            dal.Delete(idb);
+        }
     }
 }
