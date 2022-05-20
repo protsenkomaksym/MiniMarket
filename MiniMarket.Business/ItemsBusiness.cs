@@ -2,9 +2,11 @@
 using MiniMarket.Business.Mapping;
 using MiniMarket.DAL;
 using MiniMarket.DAL.Models;
+using MiniMarket.Entities;
 using MiniMarket.Entities.Dto;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace MiniMarket.Business
@@ -20,10 +22,19 @@ namespace MiniMarket.Business
             _mapper = mapper;
         }
 
-        public List<ItemDto> GetItemsByCategory(int? idCategory)
+        public List<ItemDto> GetItemsByCategory(int? idCategory, int order)
         {
             ItemsDAL dal = new ItemsDAL(_MiniMarketContext);
             List<Items> lstItems = dal.GetItemsByCategory(idCategory);
+
+            if(order == (int)OrderEnum.Asc)
+            {
+                lstItems = lstItems.OrderBy(x => x.Price).ToList();
+            }
+            else if (order == (int)OrderEnum.Desc)
+            {
+                lstItems = lstItems.OrderByDescending(x => x.Price).ToList();
+            }
 
             return _mapper.Map<List<Items>, List<ItemDto>>(lstItems);
         }

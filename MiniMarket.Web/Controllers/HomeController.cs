@@ -3,9 +3,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MiniMarket.Business;
 using MiniMarket.DAL.Models;
+using MiniMarket.Entities;
 using MiniMarket.Entities.Dto;
 using MiniMarket.Models;
 using MiniMarket.Web.Models;
+using MiniMarket.Web.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -40,7 +42,21 @@ namespace MiniMarket.Controllers
             ItemsBusiness itemsBusiness = new ItemsBusiness(_db, _mapper);
             model.lstCategories = categoriesBusiness.GetAllCategories();
             model.idCategory = idCategory;
-            model.lstItems = itemsBusiness.GetItemsByCategory(idCategory);
+            model.lstItems = itemsBusiness.GetItemsByCategory(idCategory, 0);
+            model.lstOrder = OrderHeloper.GetOrderList();
+            model.order = (int)OrderEnum.None;
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult Search(SearchViewModel model)
+        {
+            CategoriesBusiness categoriesBusiness = new CategoriesBusiness(_db, _mapper);
+            ItemsBusiness itemsBusiness = new ItemsBusiness(_db, _mapper);
+            model.lstCategories = categoriesBusiness.GetAllCategories();
+            model.lstItems = itemsBusiness.GetItemsByCategory(model.idCategory, model.order);
+            model.lstOrder = OrderHeloper.GetOrderList();
 
             return View(model);
         }
@@ -74,7 +90,7 @@ namespace MiniMarket.Controllers
 
             CategoriesBusiness categoriesBusiness = new CategoriesBusiness(_db, _mapper);
             ItemsBusiness itemsBusiness = new ItemsBusiness(_db, _mapper);
-            model.lstItems = itemsBusiness.GetItemsByCategory(null);
+            model.lstItems = itemsBusiness.GetItemsByCategory(null, 0);
 
             return View(model);
         }
