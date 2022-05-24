@@ -5,22 +5,32 @@
 @{
 }
 
-@section Scripts{ 
+@section Scripts{
     <script src="~/js/Search.js"></script>
 }
 
-@using (Html.BeginForm("Search", "Home", FormMethod.Post, new { @id="searchForm" }))
+@using (Html.BeginForm("Search", "Home", FormMethod.Post, new { @id = "searchForm" }))
 {
+
+
     <div class="row">
         <div class="col-md-3">
             Filters
-            <br />
+            @if (!string.IsNullOrEmpty(Model.query))
+            {
+                <div class="alert alert-secondary" role="alert">
+                    @Model.query
+                </div>
+            }
+
             <input type="hidden" asp-for="idCategory"></input>
+            <input type="hidden" asp-for="query"></input>
+
             <!-- Categories -->
             <div class="list-group">
                 @foreach (MiniMarket.Entities.Dto.CategoryDto c in Model.lstCategories)
                 {
-                    <a class="list-group-item @{ if (Model.idCategory == c.id) {<text>active</text>}}" asp-action="Search" asp-controller="Home" asp-route-idCategory="@c.id">@c.name</a>
+                    <a class="list-group-item @{ if (Model.idCategory == c.id) {<text>active</text>}} categoriesFilter" asp-action="Search" asp-controller="Home" asp-route-idCategory="@c.id" asp-route-q="@Model.query">@c.name</a>
                 }
             </div>
 

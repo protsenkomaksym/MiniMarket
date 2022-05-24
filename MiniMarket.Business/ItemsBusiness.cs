@@ -22,10 +22,10 @@ namespace MiniMarket.Business
             _mapper = mapper;
         }
 
-        public List<ItemDto> GetItemsByCategory(int? idCategory, int order)
+        public List<ItemDto> GetItemsByCategory(int? idCategory, int order, string query)
         {
             ItemsDAL dal = new ItemsDAL(_MiniMarketContext);
-            List<Items> lstItems = dal.GetItemsByCategory(idCategory);
+            List<Items> lstItems = dal.GetItemsByCategory(idCategory, query);
 
             if(order == (int)OrderEnum.Asc)
             {

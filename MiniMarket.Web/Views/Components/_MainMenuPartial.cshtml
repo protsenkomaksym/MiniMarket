@@ -8,22 +8,31 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-            <ul class="navbar-nav flex-grow-1">
-                <li class="nav-item">
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Search">Search</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Categories
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        @foreach (MiniMarket.Entities.Dto.CategoryDto c in Model)
-                        {
-                            <li><a class="dropdown-item" asp-action="Search" asp-controller="Home" asp-route-idCategory="@c.id">@c.name</a></li>
-                        }
-                    </ul>
-                </li>
-            </ul>
+            @using (Html.BeginForm("Search", "Home", FormMethod.Get))
+            {
+                <ul class="navbar-nav flex-grow-1">
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Search">Search</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Categories
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            @foreach (MiniMarket.Entities.Dto.CategoryDto c in Model)
+                            {
+                                <li><a class="dropdown-item" asp-action="Search" asp-controller="Home" asp-route-idCategory="@c.id">@c.name</a></li>
+                            }
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <input type="text" class="form-control" name="q" id="q" placeholder="Search" aria-label="Search" aria-describedby="basic-addon2">
+                    </li>
+                    <li class="nav-item">
+                        <button type="submit" class="btn btn-secondary">Search</button>
+                    </li>
+                </ul>
+            }
         </div>
         <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
             <ul class="navbar-nav ">

@@ -11,6 +11,7 @@ namespace MiniMarket.Web.Models
     {
         public List<CategoryDto> lstCategories { get; set; }
         public int? idCategory { get; set; }
+        public string query { get; set; }
         public List<ItemDto> lstItems { get; set; }
         public List<SelectListItem> lstOrder { get; set; }
         public int order { get; set; }

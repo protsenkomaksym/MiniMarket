@@ -15,12 +15,13 @@ namespace MiniMarket.DAL
             _MiniMarketContext = miniMarketContext;
         }
 
-        public List<Items> GetItemsByCategory(int? idCategory)
+        public List<Items> GetItemsByCategory(int? idCategory, string query)
         {
-            if (idCategory != null)
-                return _MiniMarketContext.Items.Where(x => x.IdCategory == idCategory.GetValueOrDefault()).ToList();
-            else
-                return _MiniMarketContext.Items.ToList();
+            return _MiniMarketContext.Items
+                .Where(x => (idCategory == null || x.IdCategory == idCategory.GetValueOrDefault())
+                    && ((string.IsNullOrEmpty(query) || x.Name.Contains(query))
+                    || (string.IsNullOrEmpty(query) || x.Description.Contains(query))
+                    )).ToList();
         }
 
         public Items GetItemById(int id)

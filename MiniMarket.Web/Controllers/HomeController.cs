@@ -34,7 +34,7 @@ namespace MiniMarket.Controllers
             return View();
         }
 
-        public IActionResult Search(int? idCategory)
+        public IActionResult Search(int? idCategory, string q)
         {
             SearchViewModel model = new SearchViewModel();
 
@@ -42,7 +42,8 @@ namespace MiniMarket.Controllers
             ItemsBusiness itemsBusiness = new ItemsBusiness(_db, _mapper);
             model.lstCategories = categoriesBusiness.GetAllCategories();
             model.idCategory = idCategory;
-            model.lstItems = itemsBusiness.GetItemsByCategory(idCategory, 0);
+            model.query = q;
+            model.lstItems = itemsBusiness.GetItemsByCategory(idCategory, 0, q);
             model.lstOrder = OrderHeloper.GetOrderList();
             model.order = (int)OrderEnum.None;
 
@@ -55,7 +56,7 @@ namespace MiniMarket.Controllers
             CategoriesBusiness categoriesBusiness = new CategoriesBusiness(_db, _mapper);
             ItemsBusiness itemsBusiness = new ItemsBusiness(_db, _mapper);
             model.lstCategories = categoriesBusiness.GetAllCategories();
-            model.lstItems = itemsBusiness.GetItemsByCategory(model.idCategory, model.order);
+            model.lstItems = itemsBusiness.GetItemsByCategory(model.idCategory, model.order, model.query);
             model.lstOrder = OrderHeloper.GetOrderList();
 
             return View(model);
@@ -90,7 +91,7 @@ namespace MiniMarket.Controllers
 
             CategoriesBusiness categoriesBusiness = new CategoriesBusiness(_db, _mapper);
             ItemsBusiness itemsBusiness = new ItemsBusiness(_db, _mapper);
-            model.lstItems = itemsBusiness.GetItemsByCategory(null, 0);
+            model.lstItems = itemsBusiness.GetItemsByCategory(null, 0, null);
 
             return View(model);
         }
