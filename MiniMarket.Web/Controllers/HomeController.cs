@@ -21,6 +21,7 @@ namespace MiniMarket.Controllers
         private readonly ILogger<HomeController> _logger;
         MiniMarketContext _db { get; set; }
         IMapper _mapper;
+        private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
 
         public HomeController(ILogger<HomeController> logger, MiniMarketContext db, IMapper mapper)
         {
@@ -31,6 +32,7 @@ namespace MiniMarket.Controllers
 
         public IActionResult Index()
         {
+            Logger.Info("index body");
             return View();
         }
 
