@@ -7,7 +7,7 @@ namespace MiniMarket.DAL.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            /*migrationBuilder.CreateTable(
+            migrationBuilder.CreateTable(
                 name: "Categories",
                 columns: table => new
                 {
@@ -47,16 +47,16 @@ namespace MiniMarket.DAL.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Items_idCategory",
                 table: "Items",
-                column: "idCategory");*/
+                column: "idCategory");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
-        {/*
+        {
             migrationBuilder.DropTable(
                 name: "Items");
 
             migrationBuilder.DropTable(
-                name: "Categories");*/
+                name: "Categories");
         }
     }
 }
