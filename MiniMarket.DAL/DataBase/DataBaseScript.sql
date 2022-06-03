@@ -15,15 +15,36 @@ ALTER TABLE [dbo].[Categories] DROP CONSTRAINT [DF_Categories_created]
 END
 
 GO
-/****** Object:  Table [dbo].[Items]    Script Date: 16/5/2022 15:45:15 ******/
+/****** Object:  Table [dbo].[Items]    Script Date: 3/6/2022 10:00:08 ******/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Items]') AND type in (N'U'))
 DROP TABLE [dbo].[Items]
 GO
-/****** Object:  Table [dbo].[Categories]    Script Date: 16/5/2022 15:45:15 ******/
+/****** Object:  Table [dbo].[Categories]    Script Date: 3/6/2022 10:00:08 ******/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Categories]') AND type in (N'U'))
 DROP TABLE [dbo].[Categories]
 GO
-/****** Object:  Table [dbo].[Categories]    Script Date: 16/5/2022 15:45:15 ******/
+/****** Object:  Table [dbo].[__EFMigrationsHistory]    Script Date: 3/6/2022 10:00:08 ******/
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[__EFMigrationsHistory]') AND type in (N'U'))
+DROP TABLE [dbo].[__EFMigrationsHistory]
+GO
+/****** Object:  Table [dbo].[__EFMigrationsHistory]    Script Date: 3/6/2022 10:00:08 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[__EFMigrationsHistory]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [dbo].[__EFMigrationsHistory](
+	[MigrationId] [nvarchar](150) NOT NULL,
+	[ProductVersion] [nvarchar](32) NOT NULL,
+ CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY CLUSTERED 
+(
+	[MigrationId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+END
+GO
+/****** Object:  Table [dbo].[Categories]    Script Date: 3/6/2022 10:00:08 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -45,7 +66,7 @@ END
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[Items]    Script Date: 16/5/2022 15:45:15 ******/
+/****** Object:  Table [dbo].[Items]    Script Date: 3/6/2022 10:00:08 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -70,6 +91,8 @@ END
 GO
 SET ANSI_PADDING OFF
 GO
+INSERT [dbo].[__EFMigrationsHistory] ([MigrationId], [ProductVersion]) VALUES (N'20220603125816_Initial', N'3.1.25')
+GO
 SET IDENTITY_INSERT [dbo].[Categories] ON 
 
 GO
@@ -85,6 +108,8 @@ GO
 INSERT [dbo].[Items] ([id], [name], [description], [price], [idCategory], [created]) VALUES (1, N'Water', N'Bottle of water 2lts', CAST(2.50 AS Decimal(18, 2)), 1, CAST(N'2022-05-16 11:01:35.797' AS DateTime))
 GO
 INSERT [dbo].[Items] ([id], [name], [description], [price], [idCategory], [created]) VALUES (2, N'Beer', N'Can of 500ml beer', CAST(4.30 AS Decimal(18, 2)), 1, CAST(N'2022-05-16 11:01:55.913' AS DateTime))
+GO
+INSERT [dbo].[Items] ([id], [name], [description], [price], [idCategory], [created]) VALUES (5, N'Potato', N'1kg of Potato', CAST(2.02 AS Decimal(18, 2)), 2, CAST(N'2022-05-17 12:51:44.857' AS DateTime))
 GO
 SET IDENTITY_INSERT [dbo].[Items] OFF
 GO
