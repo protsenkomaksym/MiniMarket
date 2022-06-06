@@ -8,8 +8,9 @@
 <h4>Create new item</h4>
 <hr />
 
-@using (Html.BeginForm("NewItem", "Home", FormMethod.Post))
-{
+
+<form asp-action="NewItem" asp-controller="Home" method="post">
+
     <div asp-validation-summary="All"></div>
     <div class="row">
         <input type="hidden" asp-for="id" />
@@ -54,4 +55,4 @@
             </div>
         </div>
     </div>
-}
+</form>

@@ -23,8 +23,8 @@
                 </div>
             }
 
-            <input type="hidden" asp-for="idCategory"></input>
-            <input type="hidden" asp-for="query"></input>
+            <input type="hidden" asp-for="idCategory" />
+            <input type="hidden" asp-for="query" />
 
             <!-- Categories -->
             <div class="list-group">
@@ -49,13 +49,13 @@
                 </div>
                 <br />
                 <div class="row">
+                    @if (Model.lstItems.Count == 0)
+                    {
+                        <div class="alert alert-warning" role="alert">
+                            No items found
+                        </div>
+                    }
                     <ol class="list-group list-group-numbered">
-                        @if (Model.lstItems.Count == 0)
-                        {
-                            <div class="alert alert-warning" role="alert">
-                                No items found
-                            </div>
-                        }
 
                         @foreach (MiniMarket.Entities.Dto.ItemDto i in Model.lstItems)
                         {

@@ -26,7 +26,9 @@ namespace MiniMarket.Web.Handlers
             context.Response.Body = newBody;
 
             // Request
+            context.Request.EnableBuffering(); // Important!
             var bodyTextReq = await new StreamReader(context.Request.Body).ReadToEndAsync();
+            context.Request.Body.Position = 0; // Important!
             Logger.Info($"Start request Logging Middleware: {bodyTextReq}");
 
 
