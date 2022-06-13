@@ -32,8 +32,12 @@ namespace MiniMarket.Controllers
 
         public IActionResult Index()
         {
-            Logger.Info("index body");
-            return View();
+            //Logger.Info("index body");
+            ItemsBusiness itemsBusiness = new ItemsBusiness(_db, _mapper);
+            IndexViewModel model = new IndexViewModel();
+            model.lstItemsWithDiscount = itemsBusiness.GetItemsWithDiscount();
+
+            return View(model);
         }
 
         public IActionResult Search(int? idCategory, string q)
@@ -82,6 +86,7 @@ namespace MiniMarket.Controllers
                 model.Description = i.Description;
                 model.Price = i.Price;
                 model.Created = i.Created;
+                model.discount = i.discount;
             }
 
             return View(model);
@@ -114,6 +119,7 @@ namespace MiniMarket.Controllers
                 model.Description = i.Description;
                 model.Price = i.Price;
                 model.idCategory = i.IdCategory;
+                model.Discount = i.discount;
             }
 
             foreach (CategoryDto c in categoriesBusiness.GetAllCategories())
@@ -144,8 +150,9 @@ namespace MiniMarket.Controllers
                 i.Description = model.Description;
                 i.Price = model.Price.GetValueOrDefault();
                 i.IdCategory = model.idCategory.GetValueOrDefault();
+                i.discount = model.Discount;
 
-                if(model.id != null)
+                if (model.id != null)
                 {
                     // Update
                     itemsBusiness.Update(i);

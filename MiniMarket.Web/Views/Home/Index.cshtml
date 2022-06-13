@@ -1,8 +1,33 @@
-﻿@{
+﻿@model MiniMarket.Web.Models.IndexViewModel
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
+
+    @if (Model.lstItemsWithDiscount.Count > 0)
+    {
+        <div class="div-left"><b>Discounts</b></div>
+    }
+
+    @foreach (MiniMarket.Entities.Dto.ItemDto i in Model.lstItemsWithDiscount)
+    {
+        <div class="card" style="width: 18rem;">
+            <svg class="bd-placeholder-img card-img-top" width="100%" height="100" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"></rect><text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text></svg>
+            <div class="card-body">
+                <h5 class="card-title">@i.Name</h5>
+                <p class="card-text">
+                    @i.Description
+                    <br />
+                    <b>$@string.Format("{0} ({1}% off)", i.Price, i.discount)</b>
+                </p>
+                <a class="btn btn-primary" asp-action="Item" asp-controller="Home" asp-route-id="@i.Id">View</a>
+            </div>
+        </div>
+    }
+
+    <hr />
 
     <div id="carouselExampleDark" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-indicators">
@@ -12,7 +37,7 @@
         <div class="carousel-inner">
             <div class="carousel-item active" data-bs-interval="3000">
                 <a class="dropdown-item" asp-action="Search" asp-controller="Home">
-                    <img src="/Img/bvg.jpg" class="d-block w-100" alt="...">
+                    <img src="/Img/bvg.jpg" class="d-block w-50" alt="...">
                 </a>
                 <div class="carousel-caption d-none d-md-block">
                     <h5>Beverages</h5>
@@ -21,7 +46,7 @@
             </div>
             <div class="carousel-item" data-bs-interval="3000">
                 <a class="dropdown-item" asp-action="Search" asp-controller="Home">
-                    <img src="/Img/vgt.jpg" class="d-block w-100" alt="...">
+                    <img src="/Img/vgt.jpg" class="d-block w-50" alt="...">
                 </a>
                 <div class="carousel-caption d-none d-md-block">
                     <h5>Vegetables</h5>

@@ -13,5 +13,6 @@ namespace MiniMarket.Web.Models
         public decimal Price { get; set; }
         public int IdCategory { get; set; }
         public DateTime Created { get; set; }
+        public int discount { get; set; }
     }
 }

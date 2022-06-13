@@ -21,5 +21,6 @@ namespace MiniMarket.Web.Models
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Price is Required")]
         public decimal? Price { get; set; }
+        public int Discount { get; set; }
     }
 }

@@ -62,6 +62,7 @@ namespace MiniMarket.Business
             idb.Description = i.Description;
             idb.Price = i.Price;
             idb.IdCategory = i.IdCategory;
+            idb.discount = i.discount;
 
             dal.Update(idb);
         }
@@ -73,6 +74,14 @@ namespace MiniMarket.Business
             Items idb = dal.GetItemById(id);
 
             dal.Delete(idb);
+        }
+
+        public List<ItemDto> GetItemsWithDiscount()
+        {
+            ItemsDAL dal = new ItemsDAL(_MiniMarketContext);
+            List<Items> lstItems = dal.GetItemsWithDiscount();
+
+            return _mapper.Map<List<Items>, List<ItemDto>>(lstItems);
         }
     }
 }

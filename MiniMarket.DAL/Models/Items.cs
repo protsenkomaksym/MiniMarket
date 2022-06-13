@@ -15,6 +15,7 @@ namespace MiniMarket.DAL.Models
         public decimal Price { get; set; }
         public int IdCategory { get; set; }
         public DateTime Created { get; set; }
+        public int discount { get; set; }
 
         public virtual Categories IdCategoryNavigation { get; set; }
     }

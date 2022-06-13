@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.EntityFrameworkCore;
 
 namespace MiniMarket.DAL
 {
@@ -13,6 +14,11 @@ namespace MiniMarket.DAL
         public ItemsDAL(MiniMarketContext miniMarketContext)
         {
             _MiniMarketContext = miniMarketContext;
+        }
+
+        public List<Items> GetItemsWithDiscount()
+        {
+            return _MiniMarketContext.Items.Where(x => x.discount > 0).ToList();
         }
 
         public List<Items> GetItemsByCategory(int? idCategory, string query)
