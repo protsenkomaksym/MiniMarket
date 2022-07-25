@@ -5,11 +5,13 @@ VisualStudioVersion = 16.0.32407.337
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MiniMarket.Web", "MiniMarket.Web\MiniMarket.Web.csproj", "{9206AA3E-57A8-4BFE-9AF1-4963AAFD4D8C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniMarket.DAL", "MiniMarket.DAL\MiniMarket.DAL.csproj", "{6BD2B6A1-5D6E-49B7-8AF4-B127D0212A4F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MiniMarket.DAL", "MiniMarket.DAL\MiniMarket.DAL.csproj", "{6BD2B6A1-5D6E-49B7-8AF4-B127D0212A4F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniMarket.Business", "MiniMarket.Business\MiniMarket.Business.csproj", "{B4F94285-BB03-45D8-B705-8B5358C57D7A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MiniMarket.Business", "MiniMarket.Business\MiniMarket.Business.csproj", "{B4F94285-BB03-45D8-B705-8B5358C57D7A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniMarket.Entities", "MiniMarket.Entities\MiniMarket.Entities.csproj", "{B24820C6-9D19-42F0-8A39-DBD02BA797D2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MiniMarket.Entities", "MiniMarket.Entities\MiniMarket.Entities.csproj", "{B24820C6-9D19-42F0-8A39-DBD02BA797D2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniMarket.Api", "MiniMarket.Api\MiniMarket.Api.csproj", "{C111C113-1278-4B50-9290-F46CB9D8006D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{B24820C6-9D19-42F0-8A39-DBD02BA797D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B24820C6-9D19-42F0-8A39-DBD02BA797D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B24820C6-9D19-42F0-8A39-DBD02BA797D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C111C113-1278-4B50-9290-F46CB9D8006D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C111C113-1278-4B50-9290-F46CB9D8006D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C111C113-1278-4B50-9290-F46CB9D8006D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C111C113-1278-4B50-9290-F46CB9D8006D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
