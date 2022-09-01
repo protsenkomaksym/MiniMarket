@@ -11,19 +11,20 @@ namespace MiniMarket.Business
 {
     public class CategoriesBusiness
     {
-        MiniMarketContext _MiniMarketContext { get; set; }
         IMapper _mapper { get; set; }
+        CategoriesDAL _categoriesDAL { get; set; }
 
-        public CategoriesBusiness(MiniMarketContext miniMarketContext, IMapper mapper)
+        public CategoriesBusiness(MiniMarketContext miniMarketContext, 
+            IMapper mapper,
+            CategoriesDAL categoriesDAL)
         {
-            _MiniMarketContext = miniMarketContext;
             _mapper = mapper;
+            _categoriesDAL = categoriesDAL;
         }
 
         public List<CategoryDto> GetAllCategories()
         {
-            CategoriesDAL dal = new CategoriesDAL(_MiniMarketContext);
-            List<Categories> categories = dal.GetAllCategories();
+            List<Categories> categories = _categoriesDAL.GetAllCategories();
 
             return _mapper.Map<List<Categories>, List<CategoryDto>>(categories);
         }

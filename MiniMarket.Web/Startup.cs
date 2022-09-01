@@ -5,7 +5,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MiniMarket.Business;
 using MiniMarket.Business.Mapping;
+using MiniMarket.DAL;
 using MiniMarket.DAL.Models;
 using MiniMarket.Web.Handlers;
 using NLog;
@@ -57,7 +59,10 @@ namespace MiniMarket
             NLog.LogManager.Configuration = config;
             // ----------------------
 
-
+            services.AddScoped<ItemsDAL>();
+            services.AddScoped<ItemsBusiness>();
+            services.AddScoped<CategoriesDAL>();
+            services.AddScoped<CategoriesBusiness>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -10,21 +10,24 @@ using System.Threading.Tasks;
 
 namespace MiniMarket.Web.Views.Components
 {
-    public class MainMenuPartialComponent: ViewComponent
+    public class MainMenuPartialComponent : ViewComponent
     {
         MiniMarketContext _db { get; set; }
         IMapper _mapper;
+        CategoriesBusiness _categoriesBusiness { get; set; }
 
-        public MainMenuPartialComponent(MiniMarketContext db, IMapper mapper)
+        public MainMenuPartialComponent(MiniMarketContext db, 
+            IMapper mapper,
+            CategoriesBusiness categoriesBusiness)
         {
             _db = db;
             _mapper = mapper;
+            _categoriesBusiness = categoriesBusiness;
         }
 
         public IViewComponentResult Invoke()
         {
-            CategoriesBusiness categoriesBusiness = new CategoriesBusiness(_db, _mapper);
-            List<CategoryDto> lstCat = categoriesBusiness.GetAllCategories();
+            List<CategoryDto> lstCat = _categoriesBusiness.GetAllCategories();
 
             return View("~/Views/Components/_MainMenuPartial.cshtml", lstCat);
         }

@@ -13,19 +13,18 @@ namespace MiniMarket.Business
 {
     public class ItemsBusiness
     {
-        MiniMarketContext _MiniMarketContext { get; set; }
         IMapper _mapper { get; set; }
+        ItemsDAL _ItemsDAL { get; set; }
 
-        public ItemsBusiness(MiniMarketContext miniMarketContext, IMapper mapper)
+        public ItemsBusiness(IMapper mapper, ItemsDAL itemsDAL)
         {
-            _MiniMarketContext = miniMarketContext;
             _mapper = mapper;
+            _ItemsDAL = itemsDAL;
         }
 
         public List<ItemDto> GetItemsByCategory(int? idCategory, int order, string query)
         {
-            ItemsDAL dal = new ItemsDAL(_MiniMarketContext);
-            List<Items> lstItems = dal.GetItemsByCategory(idCategory, query);
+            List<Items> lstItems = _ItemsDAL.GetItemsByCategory(idCategory, query);
 
             if(order == (int)OrderEnum.Asc)
             {
@@ -41,45 +40,38 @@ namespace MiniMarket.Business
 
         public ItemDto GetItemsById(int id)
         {
-            ItemsDAL dal = new ItemsDAL(_MiniMarketContext);
-            Items i = dal.GetItemById(id);
+            Items i = _ItemsDAL.GetItemById(id);
 
             return _mapper.Map<Items, ItemDto>(i);
         }
 
         public void Create(ItemDto i)
         {
-            ItemsDAL dal = new ItemsDAL(_MiniMarketContext);
-            dal.Create(_mapper.Map<ItemDto, Items>(i));
+            _ItemsDAL.Create(_mapper.Map<ItemDto, Items>(i));
         }
 
         public void Update(ItemDto i)
         {
-            ItemsDAL dal = new ItemsDAL(_MiniMarketContext);
-
-            Items idb = dal.GetItemById(i.Id);
+            Items idb = _ItemsDAL.GetItemById(i.Id);
             idb.Name = i.Name;
             idb.Description = i.Description;
             idb.Price = i.Price;
             idb.IdCategory = i.IdCategory;
             idb.discount = i.discount;
 
-            dal.Update(idb);
+            _ItemsDAL.Update(idb);
         }
 
         public void Delete(int id)
         {
-            ItemsDAL dal = new ItemsDAL(_MiniMarketContext);
+            Items idb = _ItemsDAL.GetItemById(id);
 
-            Items idb = dal.GetItemById(id);
-
-            dal.Delete(idb);
+            _ItemsDAL.Delete(idb);
         }
 
         public List<ItemDto> GetItemsWithDiscount()
         {
-            ItemsDAL dal = new ItemsDAL(_MiniMarketContext);
-            List<Items> lstItems = dal.GetItemsWithDiscount();
+            List<Items> lstItems = _ItemsDAL.GetItemsWithDiscount();
 
             return _mapper.Map<List<Items>, List<ItemDto>>(lstItems);
         }

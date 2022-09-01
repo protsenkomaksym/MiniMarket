@@ -8,7 +8,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using MiniMarket.Business;
 using MiniMarket.Business.Mapping;
+using MiniMarket.DAL;
 using MiniMarket.DAL.Models;
 using System;
 using System.Collections.Generic;
@@ -49,6 +51,11 @@ namespace MiniMarket.Api
             IMapper mapper = mapperConfig.CreateMapper();
             services.AddSingleton(mapper);
             // --------------------
+
+            services.AddScoped<ItemsDAL>();
+            services.AddScoped<ItemsBusiness>();
+            services.AddScoped<CategoriesDAL>();
+            services.AddScoped<CategoriesBusiness>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

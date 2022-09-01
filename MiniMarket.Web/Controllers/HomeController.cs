@@ -19,23 +19,28 @@ namespace MiniMarket.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        MiniMarketContext _db { get; set; }
         IMapper _mapper;
         private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
+        ItemsBusiness _itemsBusiness;
+        CategoriesBusiness _categoriesBusiness;
 
-        public HomeController(ILogger<HomeController> logger, MiniMarketContext db, IMapper mapper)
+        public HomeController(ILogger<HomeController> logger, 
+            MiniMarketContext db, 
+            IMapper mapper,
+            CategoriesBusiness backendBLL,
+            ItemsBusiness itemsBusiness)
         {
             _logger = logger;
-            _db = db;
             _mapper = mapper;
+            _categoriesBusiness = backendBLL;
+            _itemsBusiness = itemsBusiness;
         }
 
         public IActionResult Index()
         {
             //Logger.Info("index body");
-            ItemsBusiness itemsBusiness = new ItemsBusiness(_db, _mapper);
             IndexViewModel model = new IndexViewModel();
-            model.lstItemsWithDiscount = itemsBusiness.GetItemsWithDiscount();
+            model.lstItemsWithDiscount = _itemsBusiness.GetItemsWithDiscount();
 
             return View(model);
         }
@@ -44,12 +49,10 @@ namespace MiniMarket.Controllers
         {
             SearchViewModel model = new SearchViewModel();
 
-            CategoriesBusiness categoriesBusiness = new CategoriesBusiness(_db, _mapper);
-            ItemsBusiness itemsBusiness = new ItemsBusiness(_db, _mapper);
-            model.lstCategories = categoriesBusiness.GetAllCategories();
+            model.lstCategories = _categoriesBusiness.GetAllCategories();
             model.idCategory = idCategory;
             model.query = q;
-            model.lstItems = itemsBusiness.GetItemsByCategory(idCategory, 0, q);
+            model.lstItems = _itemsBusiness.GetItemsByCategory(idCategory, 0, q);
             model.lstOrder = OrderHeloper.GetOrderList();
             model.order = (int)OrderEnum.None;
 
@@ -59,10 +62,8 @@ namespace MiniMarket.Controllers
         [HttpPost]
         public IActionResult Search(SearchViewModel model)
         {
-            CategoriesBusiness categoriesBusiness = new CategoriesBusiness(_db, _mapper);
-            ItemsBusiness itemsBusiness = new ItemsBusiness(_db, _mapper);
-            model.lstCategories = categoriesBusiness.GetAllCategories();
-            model.lstItems = itemsBusiness.GetItemsByCategory(model.idCategory, model.order, model.query);
+            model.lstCategories = _categoriesBusiness.GetAllCategories();
+            model.lstItems = _itemsBusiness.GetItemsByCategory(model.idCategory, model.order, model.query);
             model.lstOrder = OrderHeloper.GetOrderList();
 
             return View(model);
@@ -72,8 +73,7 @@ namespace MiniMarket.Controllers
         {
             ItemViewModel model = new ItemViewModel();
 
-            ItemsBusiness itemsBusiness = new ItemsBusiness(_db, _mapper);
-            ItemDto i = itemsBusiness.GetItemsById(id);
+            ItemDto i = _itemsBusiness.GetItemsById(id);
 
             if (i == null)
             {
@@ -96,9 +96,7 @@ namespace MiniMarket.Controllers
         {
             AdminViewModel model = new AdminViewModel();
 
-            CategoriesBusiness categoriesBusiness = new CategoriesBusiness(_db, _mapper);
-            ItemsBusiness itemsBusiness = new ItemsBusiness(_db, _mapper);
-            model.lstItems = itemsBusiness.GetItemsByCategory(null, 0, null);
+            model.lstItems = _itemsBusiness.GetItemsByCategory(null, 0, null);
 
             return View(model);
         }
@@ -107,13 +105,11 @@ namespace MiniMarket.Controllers
         {
             AddNewItemViewModel model = new AddNewItemViewModel();
 
-            CategoriesBusiness categoriesBusiness = new CategoriesBusiness(_db, _mapper);
-            ItemsBusiness itemsBusiness = new ItemsBusiness(_db, _mapper);
             model.lstCategories = new List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem>();
 
             if (id != null)
             {
-                ItemDto i = itemsBusiness.GetItemsById(id.GetValueOrDefault());
+                ItemDto i = _itemsBusiness.GetItemsById(id.GetValueOrDefault());
                 model.id = i.Id;
                 model.Name = i.Name;
                 model.Description = i.Description;
@@ -122,7 +118,7 @@ namespace MiniMarket.Controllers
                 model.Discount = i.discount;
             }
 
-            foreach (CategoryDto c in categoriesBusiness.GetAllCategories())
+            foreach (CategoryDto c in _categoriesBusiness.GetAllCategories())
             {
                 model.lstCategories.Add(new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem()
                 {
@@ -137,8 +133,6 @@ namespace MiniMarket.Controllers
         [HttpPost]
         public IActionResult NewItem(AddNewItemViewModel model)
         {
-            CategoriesBusiness categoriesBusiness = new CategoriesBusiness(_db, _mapper);
-            ItemsBusiness itemsBusiness = new ItemsBusiness(_db, _mapper);
             model.lstCategories = new List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem>();
 
             if (ModelState.IsValid)
@@ -155,19 +149,19 @@ namespace MiniMarket.Controllers
                 if (model.id != null)
                 {
                     // Update
-                    itemsBusiness.Update(i);
+                    _itemsBusiness.Update(i);
                 }
                 else
                 {
                     // Create
-                    itemsBusiness.Create(i);
+                    _itemsBusiness.Create(i);
                 }
 
                 return RedirectToAction("Admin");
             }
 
             // Populate model again
-            foreach (CategoryDto c in categoriesBusiness.GetAllCategories())
+            foreach (CategoryDto c in _categoriesBusiness.GetAllCategories())
             {
                 model.lstCategories.Add(new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem()
                 {
@@ -183,8 +177,7 @@ namespace MiniMarket.Controllers
         {
             ItemViewModel model = new ItemViewModel();
 
-            ItemsBusiness itemsBusiness = new ItemsBusiness(_db, _mapper);
-            itemsBusiness.Delete(id);
+            _itemsBusiness.Delete(id);
 
             return RedirectToAction("Admin");
         }
